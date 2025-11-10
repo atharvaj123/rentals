@@ -50,3 +50,16 @@ frappe.ui.form.on("Drivers", {
 
 	},
 });
+
+frappe.ui.form.on("Drivers", {
+    validate(frm) {
+        if (frm.doc.license_expiry_date && frm.doc.license_expiry_date < frappe.datetime.get_today()) {
+            frappe.msgprint({
+                title: __('Invalid License Expiry Date'),
+                message: __('The license expiry date cannot be in the past. Please enter a valid date.'),
+                indicator: 'red'
+            });
+            frappe.validated = false;
+        }
+    }
+});
